@@ -9,3 +9,5 @@ but it turned out that the actual test problem is. Also, the challenge requires
 that you solve for a grid of 100x100 characters. My code will work for any
 size of grid. The last line of the grid must absolutely end with a newline
 character! Don't say I didn't warn you.
+
+GameOfLifeOneRule.c is the shorter and faster version of the code.  Use that.
