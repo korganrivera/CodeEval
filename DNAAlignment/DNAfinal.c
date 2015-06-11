@@ -1,13 +1,17 @@
 /*
-    This is the hardest problem on CodeEval, according to the success rates on the site.  After 12 hours, I had pseudo-code for it.
-    Let's see if it works.  The premise is basically using the merits of a bad bubble sort recursively.
+    This is the hardest problem on CodeEval, according to the success rates on
+    the site.  After 12 hours, I had pseudo-code for it. Let's see if it works.
+    The premise is basically using the merits of a bad bubble sort recursively.
 
     start:  2015.6.10.00:09
-    break:  2015.6.10.02:07  Almost works, but some glitch preventing it from printing out all solutions.  probably just a loop variable. finish tomorrow.
+    break:  2015.6.10.02:07 Almost works, but some glitch preventing it from
+                            printing out all solutions.  probably just a loop
+                            variable. finish tomorrow.
     start:  2015.6.10.12:00
-    note:   2015.6.10.16:13 After 4 hours of running everything by hand, I finally figured it out.  I think...
+    note:   2015.6.10.16:13 After 4 hours of running everything by hand, I
+                            finally figured it out.  I think...
     END:    2015.6.10.18:58 Okay this time I'm really done.  21 hours of work. O_O
-    <sigh>  2015.6.10.19:45 Code works but it's too slow with longer strings.  FUCK.
+    <sigh>  2015.6.10.19:45 Code works but it's too slow with massive strings.  FUCK.
     @author: Korgan Rivera (korganrivera@gmail.com)
 */
 
@@ -29,8 +33,8 @@ int main(int argc, char *argv[]){
     unsigned i;
     char str1[400], str2[400];              //  this stores the two strings I read from the file.  Specs say strings won't be longer than 400 chars.
     char *shortword;                        //  this will store the shortest word from each pair of words read from file.
-    unsigned length1, length2;
-    unsigned shortestlength;
+    unsigned length1, length2;              //  lengths of each word read from file.
+    unsigned shortestlength;                //  length of the shortest word.
 
     //  If program isn't called with 2 arguments, explain usage.
     if(argc!=2){
@@ -49,9 +53,6 @@ int main(int argc, char *argv[]){
     //  read string pairs into str1 and str2.
     while(EOF != fscanf(fp, "%s %*c %s", str1, str2)){
 
-        //  debug: output strings from the site.
-        //printf("\n%s %s", str1, str2);
-
         //  measure length of strings and put length in length1 and length2.
         length1 = strlen(str1);
         length2 = strlen(str2);
@@ -61,7 +62,7 @@ int main(int argc, char *argv[]){
         else { length = length2; shortestlength = length1; }
 
         //  set bestscore to a fairly sensible bad score.
-        bestscore=-8*length-1;
+        bestscore=-8*length;
 
         //  malloc space for shortword and longword using the longest length. +1 is for the null terminator.
         if((shortword = malloc(length+1)) == NULL){ puts("\nmalloc failed."); exit(1); }
@@ -116,9 +117,6 @@ void func(char *str, unsigned level){
     for(i=0; str[i]; i++) mystr[i] = str[i];
     mystr[i]='\0';
 
-    //  print the string for debug.
-    //printf("\n%s", mystr);
-
     count++;
 
     //  score the string.
@@ -132,8 +130,8 @@ void func(char *str, unsigned level){
         else score-=1;                                                                      //  else if not a new gap, decrease score by 1.
     }
 
-    //  compare score to current best. if better, store it.
-    if(score>bestscore) {bestscore = score; printf("\nbestwordsofar: %s, score:%d", mystr, score); }
+    //  compare score to current best. if better, save it.
+    if(score>bestscore) bestscore = score;
 
     //  This is one half of a bubble sort that moves
     //  a gap up through the string.  I re-call this
