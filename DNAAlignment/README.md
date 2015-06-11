@@ -23,3 +23,27 @@ Oh well.
 So, I'm trying a much simpler idea now, and using 
 this code to give me answers to smaller problems, 
 with which I can test my new theory.  
+
+Btw, that number above in words
+is 1.33768/(10 million billion
+billion billion billion billion
+billion billion billion billion
+billion billion billion billion
+billion billion billion billion
+billion billion billion billion
+billion billion billion billion
+billion billion billion billion
+billion billion billion billion
+billion billion billion billion
+billion billion billion billion
+billion billion billion billion
+billion billion billion billion
+billion billion billion billion
+billion billion billion billion
+billion billion billion billion
+billion billion billion billion
+billion billion billion billion
+billion billion billion billion
+billion billion billion billion
+billion billion billion billion
+billion billion)
