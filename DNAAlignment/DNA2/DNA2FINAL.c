@@ -34,6 +34,9 @@
     2015.7.1.21:46      So I emailed the guys on the site and they said that gaps in each word should be
                         considered independent. So I should be doing the two gap thing.
                         So I'll at least switch back to that, and then who knows.
+                        Well, I did it but CodeEval fails it.  The one it gave PARTIAL to DIDN'T follow this two-gap rule.
+                        So yeah, I'm out of ideas.  I reused this code for another problem and THAT passed,
+                        so I don't know what the fuck.  Been working on this problem for 21 days now. O_O
 */
 
 #include <stdio.h>
@@ -45,12 +48,16 @@
 #define GAPSTART (-8)
 #define GAPEXT (-1)
 
+unsigned DISPLAY=0;
+
 typedef struct _cell {
     int topnum;
     int leftnum;
     int diagnum;
     int mainnum;
-    char gapflag;       //  gapflag=0 means that a gap hasn't started.
+    char str1gapflag;       //  gapflag=0 means that a gap hasn't started.
+    char str2gapflag;
+
 }cell;
 
 
@@ -60,6 +67,7 @@ int main(int argc, char *argv[]){
     unsigned width, height, gridsize, i, j;
     cell *grid;
     int highest;
+    char ch, newlineflag=0;
 
     //  If program isn't called with 2 arguments, explain usage.
     if(argc!=2){ printf("\nUSAGE: %s <filename>", argv[0]); exit(0); }
@@ -71,12 +79,17 @@ int main(int argc, char *argv[]){
     if(fgetc(fp)==EOF) { puts("\nempty file."); exit(1); }
     rewind(fp);
 
+    //  DEBUG: print out input first.
+    //puts("INPUT: ");
+    //while(EOF != (ch=fgetc(fp))) putchar(ch);
+    //rewind(fp);
+    //putchar('\n');
+
     //  read string pairs into str1 and str2.
-    while(EOF != fscanf(fp, "%s %*c %s", str1, str2)){
+    while(EOF != fscanf(fp, "%s %*c %s ", str1, str2)){
 
-
-//        printf("\nI read '%s' and '%s'", str1, str2);
-
+      //  printf("\nI read '%s' and '%s'\n\n", str1, str2);
+        if(newlineflag){ putchar('\n'); newlineflag=0;}
 
         //  get string lengths.
         height = strlen(str1)+1;
@@ -92,13 +105,15 @@ int main(int argc, char *argv[]){
         //  initialise left edge.
         for(i=1; i<height; i++) {
             grid[i*(width)].mainnum = GAPSTART+(i-1)*GAPEXT;
-            grid[i*(width)].gapflag = 1;
+            grid[i*(width)].str1gapflag = 1;
+            grid[i*(width)].str2gapflag = 1;
         }
 
         //  initialise top edge.
         for(i=1; i<width; i++) {
             grid[i].mainnum = GAPSTART+(i-1)*GAPEXT;
-            grid[i].gapflag = 1;
+            grid[i].str1gapflag = 1;
+            grid[i].str2gapflag = 1;
         }
 
         //  set all the values in the grid.
@@ -106,11 +121,11 @@ int main(int argc, char *argv[]){
             for(j=1; j<width; j++){
 
                 //  set topnum.
-                if(grid[(i-1)*width+j].gapflag) grid[i*(width)+j].topnum = grid[(i-1)*width+j].mainnum + GAPEXT;
+                if(grid[(i-1)*width+j].str2gapflag) grid[i*(width)+j].topnum = grid[(i-1)*width+j].mainnum + GAPEXT;
                 else grid[i*(width)+j].topnum = grid[(i-1)*width+j].mainnum + GAPSTART;
 
                 //  set leftnum.
-                if(grid[i*width+j-1].gapflag) grid[i*(width)+j].leftnum = grid[i*width+j-1].mainnum + GAPEXT;
+                if(grid[i*width+j-1].str1gapflag) grid[i*(width)+j].leftnum = grid[i*width+j-1].mainnum + GAPEXT;
                 else grid[i*(width)+j].leftnum = grid[i*width+j-1].mainnum + GAPSTART;
 
                 //  set diagnum.
@@ -120,25 +135,44 @@ int main(int argc, char *argv[]){
                 //  set mainnum. if topnum is biggest, use that. set gapflag.
                 if(grid[i*(width)+j].topnum >= grid[i*(width)+j].diagnum && grid[i*(width)+j].topnum >= grid[i*(width)+j].leftnum) {
                     grid[i*(width)+j].mainnum = grid[i*(width)+j].topnum;
-                    grid[i*(width)+j].gapflag = 1;
+                    grid[i*(width)+j].str1gapflag = 0;
+                    grid[i*(width)+j].str2gapflag = 1;
+
                 }
 
                 //  else if leftnum is biggest, use that. set gapflag.
                 else if (grid[i*(width)+j].leftnum >= grid[i*(width)+j].diagnum && grid[i*(width)+j].leftnum >= grid[i*(width)+j].topnum) {
                     grid[i*(width)+j].mainnum = grid[i*(width)+j].leftnum;
-                       grid[i*(width)+j].gapflag = 1;
+                       grid[i*(width)+j].str1gapflag = 1;
+                       grid[i*(width)+j].str2gapflag = 0;
                 }
 
                 //  otherwise use diagnum, and reset gapflag.
                 else {
                     grid[i*(width)+j].mainnum = grid[i*(width)+j].diagnum;
-                    grid[i*(width)+j].gapflag = 0;
+                    grid[i*(width)+j].str1gapflag = 0;
+                    grid[i*(width)+j].str2gapflag = 0;
                 }
             }
         }   //  end of for.
 
+        if(DISPLAY){
+                //  display the grid.
+                printf("     ");
+                for(i=0; i<width; i++) printf("%4c", str2[i]);
+                printf("\n ");
+
+                for(i=0; i<height; i++){
+                    for(j=0; j<width; j++){
+                        printf("%4d", grid[i*(width)+j].mainnum);
+                    }
+                    putchar('\n');
+                     printf("%c", str1[i]);
+                }
+        }
         //  print score: number in bottom right corner.
-        printf("%d\n", grid[gridsize-1].mainnum);
+        printf("%d", grid[gridsize-1].mainnum);
+        newlineflag=1;
         free(grid);
 
     }// end of while
