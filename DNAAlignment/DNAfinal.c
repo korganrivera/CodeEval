@@ -47,7 +47,6 @@ int main(int argc, char *argv[]){
 
     //  if empty file, exit.
     if(fgetc(fp)==EOF) { puts("\nempty file."); exit(1); }
-
     rewind(fp);
 
     //  read string pairs into str1 and str2.
@@ -81,8 +80,9 @@ int main(int argc, char *argv[]){
 
         //  call recursive function func() with shortword, level 0.
         func(shortword, 0);
-        printf("\n%d", bestscore);
-        printf("\ncount: %d", count);
+        printf("\n%d\n", bestscore);
+        printf("\ncount: %d\n\n", count);
+        count =0;
     }
 
     free(shortword);
@@ -131,7 +131,7 @@ void func(char *str, unsigned level){
     }
 
     //  compare score to current best. if better, save it.
-    if(score>bestscore) bestscore = score;
+    if(score>bestscore) { bestscore = score; printf("\t\n%s", mystr); }
 
     //  This is one half of a bubble sort that moves
     //  a gap up through the string.  I re-call this
