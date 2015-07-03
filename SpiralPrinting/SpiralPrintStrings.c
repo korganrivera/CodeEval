@@ -17,8 +17,7 @@
 int main(int argc, char *argv[]){
     FILE *fp;
     unsigned rows, cols, sz, i;
-    char *str, c;
-    char grid[100][100][10];
+    char c, grid[100][100][10];
     unsigned direction;
     int leftlimit, rightlimit, toplimit, bottomlimit;
     unsigned count;
@@ -69,7 +68,6 @@ int main(int argc, char *argv[]){
 
         }while(count<sz);
         putchar('\n');
-//        free(str);    //  for some reason, code eval didn't like this function this time.  No idea.
     }
     fclose(fp);
 }
