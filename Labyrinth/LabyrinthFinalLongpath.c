@@ -32,7 +32,7 @@ int main(int argc, char *argv[]){
     if((fp=fopen(argv[1],"r")) == NULL){ puts("can't open file."); exit(1);}
 
     //  calculate line length.  add 2 for edge.
-    for(w=0; (c=fgetc(fp))!=EOF && c!='\n'; w++); w = w+2;
+    for(w=0, rewind(fp); (c=fgetc(fp))!=EOF && c!='\n'; w++); w = w+2;
 
     //  calculate height of grid. add 2 for edge.
     rewind(fp); h=0;

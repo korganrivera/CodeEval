@@ -2,11 +2,21 @@
     CodeEval's Package Problem.
     This program wasn't hard but it took me far too long,
     because I had a wicked headache all day long.
+    Given the weight limit of a package, and a list of items which each have a weight and a value,
+    figure out which things to put in the package so that the weight is less than or equal to the limit
+    and the total value of items is as high as possible.
+
+    "CONSTRAINTS:
+
+    Max weight that a package can take is ≤ 100
+    There might be up to 15 items you need to choose from
+    Max weight and cost of an item is ≤ 100"
+
+    So this code can only handle up to 15 items.
 
     @author: Korgan Rivera (korganrivera@gmail.com)
     finished: 2015.6.12.23:01
 */
-
 
 #include <stdio.h>
 #include <stdlib.h>

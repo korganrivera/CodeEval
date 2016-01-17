@@ -18,3 +18,8 @@ This program takes a text file, that looks something like this:
 56 : (1,90.72,$13) (2,33.80,$40) (3,43.15,$10) (4,37.97,$16) (5,46.81,$36) (6,48.77,$79) (7,81.80,$45) (8,19.36,$79) (9,6.76,$64)
 
 And the program tells you which items are the best choices to put in the package.
+The format above is 
+<maximum package weight> : (index_number_of_item, weight, cost) 
+
+Another approach to this problem would be to use dynamic programming.  I did this recursive way because the sets of items 
+were small, and so it doesn't matter.

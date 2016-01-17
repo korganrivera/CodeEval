@@ -29,7 +29,7 @@ void combinations (int v[], int start, int n, int k, int maxk) {
 }
 
 int main (int argc, char *argv[]) {
-        int     v[100], n, i;
+        int v[100], n, i;
 
         if (argc != 2) {
                 printf ("Usage: %s n\n", argv[0]);
@@ -41,6 +41,6 @@ int main (int argc, char *argv[]) {
          * k at a time, starting with combinations containing 1
          * in the first position.
          */
-        for(i=0; i<n; i++) combinations (v, 1, n, 1, i);
+        for(i=0; i<=n; i++) combinations (v, 1, n, 1, i);
         exit (0);
 }
